@@ -1,9 +1,8 @@
 package com.transaction.ai;
 
-import dev.langchain4j.service.spring.AiService;
 import dev.langchain4j.service.SystemMessage;
 
-@AiService
+
 public interface FinancialAgent {
 
     @SystemMessage("""
