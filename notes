@@ -5,7 +5,22 @@
 利用向量化技術將交易處理 SOP 存儲，讓營運人員能以自然語言查詢：「User64 的交易為何失敗？」AI 將比對 SOP 給出精準解答。
 
 階段	任務內容	關鍵技術	狀態
-Week 1	環境與基礎串接	Spring AI, Ollama/OpenAI	🏗️ 進行中
-Week 2	Function Calling 實作	AI Agent 調用微服務 API	⏳ 待處理
+Week 1	環境與基礎串接	Spring AI, Ollama/OpenAI	K
+Week 2	Function Calling 實作	AI Agent 調用微服務 API	K
 Week 3	RAG 向量檢索整合	pgvector / Milvus, Embedding	⏳ 待處理
 Week 4	AIOps 自動化部署	AWS EKS, KEDA Integration	⏳ 待處理
+
+地端跑 model 超級久
+
+打算 串網路免費的
+
+
+week2 ->
+
+1. 第一輪 (LLM)：AI 分析問題，回傳一個 ToolCall 指令（這步最久）。
+
+2. 執行 (Java)：你的 getTransactionDetails 被呼叫（這步你應該會看到 System.out.println）。
+
+3. 第二輪 (LLM)：AI 拿到結果，組織成人類語言回答（這步也要等）
+
+
