@@ -1,194 +1,37 @@
-Cloud-Native Financial Transaction Platform on Kubernetes
+# Spring AI Bridge: Agentic Financial Operations Platform
 
-A production-style cloud-native financial transaction system built on AWS EKS, designed with stateless microservices, resilient batch processing, CI/CD automation, and disaster simulation.
+A next-generation financial transaction and AI-enhanced operations (AIOps) platform built with a Cloud-Native architecture. This project demonstrates how to evolve traditional Spring Boot microservices into **Agentic AI** systems capable of autonomous task execution, intelligent log analysis, and RAG-based knowledge retrieval.
 
-🧭 Project Vision
+## 🎯 Core Objectives
 
-This project simulates a real-world financial transaction platform deployed on Kubernetes.
+* **Agentic AI Implementation**: Developing AI Agents that can autonomously monitor system health, analyze failure logs, and provide actionable remediation steps via Function Calling.
+* **RAG (Retrieval-Augmented Generation)**: Integrating Vector Databases to allow the LLM to access internal financial regulations and transaction SOPs for precise querying.
+* **Intelligent Automation**: Enhancing existing automated alerting systems with AI reasoning to reduce Mean Time to Recovery (MTTR).
+* **Cloud-Native Resilience**: Leveraging AWS EKS, Kafka, and KEDA to ensure high availability and scalability for both financial workloads and AI processing.
 
-It is designed not as a demo application, but as a production-oriented system that focuses on:
+## 🛠 Tech Stack
 
-High availability
+* **Backend**: Java 21 / Spring Boot 3.4+
+* **AI Orchestration**: Spring AI / LangChain4j
+* **LLMs**: OpenAI GPT-4o / Ollama (Local Development)
+* **Data Storage**: MySQL (Transactional), pgvector / Milvus (Vector Store)
+* **Infrastructure**: Docker, Kubernetes (AWS EKS), GitHub Actions (CI/CD)
+* **Messaging**: Apache Kafka (Event-Driven Architecture)
 
-Fault tolerance
+## 🧠 Key Features to Implement
 
-Rolling deployments
+### 1. Log Analysis Agent (AIOps)
+An AI agent designed to monitor Kafka lag and transaction exceptions. It utilizes **Function Calling** to interact with existing microservice APIs, performing root-cause analysis on system failures.
 
-Idempotent batch processing
+### 2. Financial Knowledge RAG
+A retrieval system that vectorizes internal documents. It allows operators to query complex transaction rules or user-specific rejection reasons using natural language.
 
-Observability
+### 3. AI-Powered Self-Healing
+Integration with KEDA and Kubernetes metrics to provide AI-suggested scaling policies and automated system restarts based on anomaly detection in logs.
 
-Disaster resilience
+## 🚦 Getting Started
 
-The goal is to demonstrate practical cloud-native engineering capability, not just Kubernetes knowledge.
-
-🏗 Architecture Overview
-
-Cloud Provider: Amazon Web Services
-Kubernetes: Amazon EKS
-Backend: Spring Boot
-Database: Amazon RDS (MySQL Primary + Replica)
-CI/CD: GitHub Actions
-
-Client
-   ↓
-K8s Service
-   ↓
-Transaction API (Stateless Pods)
-   ↓
-RDS MySQL (Primary / Replica)
-   ↓
-Batch Settlement Service
-
-🚀 Core Features
-1️⃣ Transaction API (Stateless Design)
-
-Create transaction
-
-Query transaction
-
-Stateless microservice
-
-Dockerized
-
-Deployed on EKS
-
-Readiness & Liveness Probes configured
-
-Why Stateless?
-
-Enables horizontal scaling
-
-Safe rolling update
-
-Pod failure is transparent to users
-
-Demo scenario:
-
-curl → API works
-kill pod → API still works
-
-2️⃣ Financial Batch Settlement System
-
-Simulates real financial daily settlement.
-
-Features:
-
-Idempotent batch logic
-
-Handles crash recovery
-
-Single-writer guarantee
-
-Connection pooling
-
-Failure simulation included
-
-Why Idempotent?
-
-Financial systems cannot tolerate double counting.
-
-If batch crashes:
-
-Restart safely
-
-No duplicate settlement
-
-Consistent final state
-
-3️⃣ CI/CD Pipeline
-
-Automated deployment using GitHub Actions:
-
-Build
-
-Test
-
-Docker image push
-
-Deploy to EKS
-
-Rolling update
-
-Rollback strategy
-
-Why Rolling Update?
-
-Avoid full outage
-
-Gradual traffic shift
-
-Readiness probe blocks unhealthy version
-
-4️⃣ Disaster Simulation (Chaos Testing)
-
-This project intentionally simulates:
-
-Pod kill
-
-OOM scenario
-
-DB timeout
-
-Batch crash
-
-Traffic stress
-
-HPA scaling
-
-The goal is to predict system behavior under failure.
-
-5️⃣ Observability
-
-Structured logging
-
-Basic metrics
-
-Health endpoint
-
-Simple dashboard
-
-Because production systems without observability are blind systems.
-
-🔥 Engineering Decisions
-Why not Stateful Pods?
-
-Stateless service enables:
-
-Safe horizontal scaling
-
-Zero-downtime deploy
-
-Fault tolerance
-
-Why single-writer batch?
-
-Prevent race condition and inconsistent settlement.
-
-Why readiness probe matters?
-
-Prevents bad version from receiving traffic during deployment.
-
-📊 What This Project Demonstrates
-
-Kubernetes workload design
-
-Cloud-native architecture
-
-Resilient financial batch processing
-
-CI/CD automation
-
-Failure recovery strategy
-
-Production thinking
-
-🛠 Tech Stack
-| Layer     | Technology     |
-| --------- | -------------- |
-| Cloud     | AWS            |
-| K8s       | EKS            |
-| Backend   | Spring Boot    |
-| Database  | RDS MySQL      |
-| CI/CD     | GitHub Actions |
-| Container | Docker         |
+### Prerequisites
+* JDK 21 or higher
+* Docker & Docker Compose
+* OpenAI API Key or Local Ollama instance
