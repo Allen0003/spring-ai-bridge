@@ -19,9 +19,6 @@ public class TransactionTools {
 
     @Tool("根據交易 ID (transactionId) 查詢詳細資訊")
     public TransactionResponse getTransactionDetails(String transactionId) {
-
-        System.out.println( "in the " + transactionId );
-
         return transactionService.getTransaction(transactionId);
     }
 }

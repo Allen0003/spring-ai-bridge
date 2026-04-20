@@ -20,25 +20,6 @@ public class AiAssistantController {
     @Autowired
     TransactionService transactionService;
 
-//    @GetMapping("/chat")
-//    public String chat(@RequestParam String tranId, @RequestParam String msg) {
-//
-//        System.out.println("tranId = " + tranId);
-//        System.out.println("msg = " + msg);
-//
-//        TransactionResponse realData = transactionService.getTransaction(tranId);
-//
-//        String augmentedPrompt = String.format(
-//                "這是從後台系統查詢到的真實數據：%s\n\n用戶的問題是：%s",
-//                realData.toString(),
-//                msg
-//        );
-//
-//        System.out.println("msg = " + augmentedPrompt);
-//
-//        return financialAgent.ask(augmentedPrompt);
-//    }
-
 
     @GetMapping("/chat")
     public String chat(@RequestParam String msg) {

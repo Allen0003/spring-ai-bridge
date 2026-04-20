@@ -74,8 +74,9 @@
 
         <dependency>
             <groupId>dev.langchain4j</groupId>
-            <artifactId>langchain4j-ollama-spring-boot-starter</artifactId>
+            <artifactId>langchain4j-google-ai-gemini</artifactId>
             <version>0.35.0</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
