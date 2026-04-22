@@ -15,12 +15,99 @@ Week 4	AIOps 自動化部署	AWS EKS, KEDA Integration	⏳ 待處理
 打算 串網路免費的
 
 
-week2 ->
+week2 -> 用 local model
 
 1. 第一輪 (LLM)：AI 分析問題，回傳一個 ToolCall 指令（這步最久）。
 
 2. 執行 (Java)：你的 getTransactionDetails 被呼叫（這步你應該會看到 System.out.println）。
 
 3. 第二輪 (LLM)：AI 拿到結果，組織成人類語言回答（這步也要等）
+
+week2 -> 改成用雲端 google AI
+
+AI 讓你的 Java 程式去執行 TransactionTools 裡的查庫邏輯
+AI 負責決策（思考要用哪個工具），你的微服務負責執行。
+
+變超快
+
+
+
+
+
+week3 前置補充
+
+
+
+補充:
+
+Postgres 是（關聯式) SQL
+AI（特別是 LLM / RAG）的應用中，我們需要儲存「向量」（Embedding）
+
+
+CREATE TABLE my_knowledge_base (
+    id serial PRIMARY KEY,
+    content text,           -- 原始文字（給人看的）
+    embedding vector(1536)  -- 向量數據（給 AI 搜尋用的）
+);
+
+
+
+體型 兇猛程度
+
+INSERT INTO my_knowledge_base (id, name, embedding)
+VALUES (1, '小貓', '[0.1, 0.1]');
+
+INSERT INTO my_knowledge_base (id, name, embedding)
+VALUES (2, '貓', '[0.2, 0.2]');
+
+INSERT INTO my_knowledge_base (id, name, embedding)
+VALUES (3, '螞蟻', '[0.01, 0.01]');
+
+
+
+數字通常不是手動定義的
+
+交給模型： 你把「小貓」這兩個字傳給 OpenAI 或 HuggingFace 的 Embedding 模型
+
+
+搜尋時的樣子
+
+SELECT name, embedding <=> '[0.12, 0.15]' AS distance
+FROM my_knowledge_base
+ORDER BY distance
+LIMIT 2;
+
+
+
+
+
+
+
+
+Week 3 的核心任務
+
+1
+文件向量化 (Embedding)
+將文字轉為座標
+
+選定一段金融條文，使用 GoogleAiEmbeddingModel 將文字轉換成一串數字（向量）。這串數字代表了這段話的「語意」。
+2
+儲存至向量資料庫
+pgvector / Milvus
+
+將向量存入資料庫。這不是傳統的關鍵字比對，而是「語意空間」的儲存。
+3
+相似度檢索 (Vector Search)
+找出最相關的條文
+
+當用戶問「洗錢防制法如何規定？」時，程式會先去資料庫撈出最接近的 3 段法規。
+4
+增強生成 (Augmented Generation)
+餵給 Gemini 回答
+
+將撈出的法規內容併入 Prompt 告訴 Gemini：「請根據以下參考資料回答：[法規內容]」。
+
+
+
 
 
