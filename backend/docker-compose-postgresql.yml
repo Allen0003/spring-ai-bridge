@@ -1,0 +1,16 @@
+name: postgres-ai
+services:
+  db:
+    image: pgvector/pgvector:pg16 # 支援向量搜尋的版本
+    container_name: postgres-ai
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: financial_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
