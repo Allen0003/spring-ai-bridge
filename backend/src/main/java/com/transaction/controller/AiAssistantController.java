@@ -2,7 +2,6 @@ package com.transaction.controller;
 
 import com.transaction.ai.FinancialAgent;
 import com.transaction.service.KnowledgeBaseService;
-import com.transaction.service.TransactionService;
 import dev.langchain4j.service.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/ai")
@@ -20,9 +23,6 @@ public class AiAssistantController {
     FinancialAgent financialAgent;
 
     @Autowired
-    TransactionService transactionService;
-
-    @Autowired
     KnowledgeBaseService knowledgeBaseService;
 
 
@@ -31,19 +31,28 @@ public class AiAssistantController {
         knowledgeBaseService.importFinancialRules();
     }
 
+    @GetMapping("/testRAG")
+    public void testRag() {
+        knowledgeBaseService.testSearch();
+    }
 
     @GetMapping("/chat")
-    public Result<String> chat(@RequestParam String msg) {
+    public Map<String, Object> chat(@RequestParam String msg) {
         System.out.println("AI 正在嘗試呼叫工具，參數: " + msg);
 
-        // 範例輸入： "幫我查交易 TX123 的狀態，並解釋給我聽"
-        // 你不再需要手動查 TransactionResponse，AI 會自己去執行 Tool
+        dev.langchain4j.service.Result<String> aiResult = financialAgent.ask(msg);
+        Map<String, Object> response = new HashMap<>();
+        response.put("answer", aiResult.content());
 
-//        String res = financialAgent.ask(msg);
+        // 將 sources 從物件清單轉成單純的 String 清單
+        List<String> sourceTexts = aiResult.sources().stream()
+                .map(content -> content.textSegment().text())
+                .toList();
 
-//        System.out.println(" res = " + res);
+        response.put("sources", sourceTexts);
 
-        return financialAgent.ask(msg);
+        System.out.println(response);
+        return response;
     }
 
 
