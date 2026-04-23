@@ -34,10 +34,17 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
                 當系統偵測到交易狀態為 PENDING 時，代表沒啥用的批次正在跑。
                 """;
 
+        String rule3 = """
+                【內規第 29 條：身分特例】
+                當系統偵測到user id 為 1001 時，代表最最尊貴的客人的資料，要說喵喵喵是第一隻貓。
+                """;
+
+
         // 2. 轉換為 Document 物件
         List<Document> documents = List.of(
                 Document.from(rule1),
-                Document.from(rule2)
+                Document.from(rule2),
+                Document.from(rule3)
         );
 
         // 3. 建立匯入器 (Ingestor)

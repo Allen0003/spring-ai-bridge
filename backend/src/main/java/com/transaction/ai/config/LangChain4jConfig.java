@@ -49,9 +49,10 @@ public class LangChain4jConfig {
 
     @Bean
     public EmbeddingModel embeddingModel() {
+
         return GoogleAiEmbeddingModel.builder()
                 .apiKey(apiKey)
-                .modelName("embedding-001") // Google 最新的向量模型
+                .modelName("gemini-embedding-001")
                 .build();
     }
 
@@ -65,7 +66,7 @@ public class LangChain4jConfig {
                 .user("admin")
                 .password("password123")
                 .table("financial_knowledge")
-                .dimension(768) // Gemini 向量固定是 768 維
+                .dimension(3072) // Gemini 向量固定是 768 維
                 .build();
     }
 
