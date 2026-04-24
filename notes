@@ -110,4 +110,7 @@ pgvector / Milvus
 簡單的說先把資料轉成向量 (AI自己去轉) 然後在用query 去查向量
 
 
+*** 增強
+
+1. 增加 大腦設定 -> 寫更好的 Prompt Engineering 讓 AI 把各處拿到的片段資料 ex: tool, rag 組成之後再回傳
 
