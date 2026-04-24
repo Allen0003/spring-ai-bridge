@@ -29,6 +29,8 @@ public class LangChain4jConfig {
                 .apiKey(apiKey)
                 .modelName("gemini-2.5-flash")
                 .temperature(0.0)
+                .topK(1)
+                .maxOutputTokens(500)
                 .build();
     }
 
@@ -49,7 +51,6 @@ public class LangChain4jConfig {
 
     @Bean
     public EmbeddingModel embeddingModel() {
-
         return GoogleAiEmbeddingModel.builder()
                 .apiKey(apiKey)
                 .modelName("gemini-embedding-001")
@@ -76,7 +77,7 @@ public class LangChain4jConfig {
         return EmbeddingStoreContentRetriever.builder()
                 .embeddingStore(store)
                 .embeddingModel(model)
-                .maxResults(3) // 每次搜尋回傳最相關的前 3 段
+                .maxResults(2) // 每次搜尋回傳最相關的前 3 段
                 .minScore(0.7) // 相似度太低（低於 0.7）的資料不要，避免 AI 亂編
                 .build();
     }

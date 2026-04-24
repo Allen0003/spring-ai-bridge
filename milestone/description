@@ -5,3 +5,5 @@ p1-1. AI 的 tool 去查DB 資料
 p2. change to Google AI (變超快)
 
 p3. 用 RAG (去查資料 - 法條向量) 在回答
+
+p4. 使用增強 (Augmentation) - 會到處拿取資料 tool 跟 rag + 生成 (Generation) - 從各處拿取的資料組成訊息回答
