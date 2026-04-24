@@ -17,8 +17,17 @@ public class TransactionTools {
     @Autowired
     TransactionService transactionService;
 
+    //tool 寫出來是給 AI 看的
     @Tool("根據交易 ID (transactionId) 查詢詳細資訊")
-    public TransactionResponse getTransactionDetails(String transactionId) {
-        return transactionService.getTransaction(transactionId);
+    public String getTransactionDetails(String transactionId) {
+
+        TransactionResponse tx = transactionService.getTransaction(transactionId);
+
+        if (tx == null) return "找不到 ID 為 " + transactionId + " 的交易。";
+        return String.format(
+                "找到交易！ID: %s, 用戶: %s, 金額: %f %s, 狀態: %s, 時間: %s",
+                tx.getTransactionId(), tx.getUserId(), tx.getAmount(),
+                tx.getCurrency(), tx.getStatus(), tx.getCreatedAt()
+        );
     }
 }
