@@ -1,5 +1,7 @@
 
 
+demo url: http://localhost:8080/index.html
+
 2. 金融知識 RAG 檢索
 
 利用向量化技術將交易處理 SOP 存儲，讓營運人員能以自然語言查詢：「User64 的交易為何失敗？」AI 將比對 SOP 給出精準解答。
@@ -118,5 +120,9 @@ pgvector / Milvus
 *** 生成
 
 從各處拿完資料 然後 AI 組成之後再回傳
+
+*** 記憶
+
+就是把之前的對話都當成 prompt 一起丟進去
 
 
