@@ -5,10 +5,7 @@ import com.transaction.service.KnowledgeBaseService;
 import dev.langchain4j.service.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +14,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/ai")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class AiAssistantController {
 
     @Autowired
@@ -40,7 +38,7 @@ public class AiAssistantController {
     public Map<String, Object> chat(@RequestParam String msg) {
         System.out.println("AI 正在嘗試呼叫工具，參數: " + msg);
 
-        dev.langchain4j.service.Result<String> aiResult = financialAgent.ask(msg);
+        dev.langchain4j.service.Result<String> aiResult = financialAgent.ask("chat-00", msg);
         Map<String, Object> response = new HashMap<>();
         response.put("answer", aiResult.content());
 

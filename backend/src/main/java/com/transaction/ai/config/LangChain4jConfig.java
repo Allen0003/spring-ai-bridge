@@ -3,6 +3,8 @@ package com.transaction.ai.config;
 import com.transaction.ai.FinancialAgent;
 import com.transaction.ai.TransactionTools;
 import dev.langchain4j.data.segment.TextSegment;
+import dev.langchain4j.memory.chat.ChatMemoryProvider;
+import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
@@ -28,6 +30,7 @@ public class LangChain4jConfig {
         return GoogleAiGeminiChatModel.builder()
                 .apiKey(apiKey)
                 .modelName("gemini-2.5-flash")
+
                 .temperature(0.0)
                 .topK(1)
                 .maxOutputTokens(500)
@@ -39,12 +42,14 @@ public class LangChain4jConfig {
     public FinancialAgent financialAgent(
             ChatLanguageModel model,
             TransactionTools tools,
-            ContentRetriever contentRetriever  // <--- 1. 注入你定義好的檢索器
+            ContentRetriever contentRetriever,  // <--- 1. 注入你定義好的檢索器
+            ChatMemoryProvider chatMemoryProvider // <--- 1. 注入記憶供應器
     ) {
         return AiServices.builder(FinancialAgent.class)
                 .chatLanguageModel(model)
                 .tools(tools)
                 .contentRetriever(contentRetriever) // <--- 2. 這裡就是把「法規知識庫」丟給 AI 的地方
+                .chatMemoryProvider(chatMemoryProvider)
                 .build();
     }
 
@@ -80,6 +85,11 @@ public class LangChain4jConfig {
                 .maxResults(2) // 每次搜尋回傳最相關的前 3 段
                 .minScore(0.7) // 相似度太低（低於 0.7）的資料不要，避免 AI 亂編
                 .build();
+    }
+
+    @Bean
+    public ChatMemoryProvider chatMemoryProvider() {
+        return memoryId -> MessageWindowChatMemory.withMaxMessages(5);
     }
 
 }
