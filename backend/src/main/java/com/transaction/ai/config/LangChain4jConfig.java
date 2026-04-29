@@ -7,17 +7,18 @@ import dev.langchain4j.memory.chat.ChatMemoryProvider;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
+import dev.langchain4j.model.googleai.GoogleAiEmbeddingModel;
+import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.service.AiServices;
 import dev.langchain4j.store.embedding.EmbeddingStore;
-import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
+import dev.langchain4j.store.embedding.milvus.MilvusEmbeddingStore;
+import io.milvus.param.IndexType;
+import io.milvus.param.MetricType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel;
-
-import dev.langchain4j.model.googleai.GoogleAiEmbeddingModel;
 
 @Configuration
 public class LangChain4jConfig {
@@ -30,7 +31,6 @@ public class LangChain4jConfig {
         return GoogleAiGeminiChatModel.builder()
                 .apiKey(apiKey)
                 .modelName("gemini-2.5-flash")
-
                 .temperature(0.0)
                 .topK(1)
                 .maxOutputTokens(500)
@@ -65,14 +65,13 @@ public class LangChain4jConfig {
 
     @Bean
     public EmbeddingStore<TextSegment> embeddingStore() {
-        return PgVectorEmbeddingStore.builder()
+        return MilvusEmbeddingStore.builder()
                 .host("localhost")
-                .port(5432)
-                .database("financial_db")
-                .user("admin")
-                .password("password123")
-                .table("financial_knowledge")
-                .dimension(3072) // Gemini 向量固定是 768 維
+                .port(19530)
+                .collectionName("financial_knowledge")
+                .dimension(768)
+                .indexType(IndexType.HNSW) // 推薦 HNSW 索引，效能最佳
+                .metricType(MetricType.COSINE) // 餘弦相似度，適合多數 RAG 場景
                 .build();
     }
 
