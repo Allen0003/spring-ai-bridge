@@ -41,8 +41,8 @@
 
         <dependency>
             <groupId>dev.langchain4j</groupId>
-            <artifactId>langchain4j-pgvector</artifactId>
-            <version>0.35.0</version>
+            <artifactId>langchain4j-milvus</artifactId>
+            <version>0.31.0</version>
         </dependency>
 
 
