@@ -1,6 +1,8 @@
 
 
 demo url: http://localhost:8080/index.html
+demo url: http://localhost:8080/api/ai/initData
+
 
 2. 金融知識 RAG 檢索
 
@@ -9,8 +11,11 @@ demo url: http://localhost:8080/index.html
 階段	任務內容	關鍵技術	狀態
 Week 1	環境與基礎串接	Spring AI, Ollama/OpenAI	K
 Week 2	Function Calling 實作	AI Agent 調用微服務 API	K
-Week 3	RAG 向量檢索整合	pgvector / Milvus, Embedding	⏳ 待處理
+Week 3	RAG 向量檢索整合	pgvector / Milvus, Embedding	K
 Week 4	AIOps 自動化部署	AWS EKS, KEDA Integration	⏳ 待處理
+玩法二：AI 異常分析 Agent (實戰價值最高)
+
+
 
 地端跑 model 超級久
 
@@ -82,6 +87,9 @@ LIMIT 2;
 
 
 
+Milvus 處理上億規模 是 分散式的 Elasticsearch 或 「專為向量設計的雲原生運算引擎」
+
+不需要手動去連資料庫。 Milvus 參數搞不太定 放棄
 
 
 
@@ -125,4 +133,19 @@ pgvector / Milvus
 
 就是把之前的對話都當成 prompt 一起丟進去
 
+
+
+
+
+*** tool
+
+AI 會自己決定用哪個 tool 精準度取決於 tool 的描述  不用 if / else 程式也自己去做事
+
+在 agent build 的時候告訴他要用 tool
+
+你不需要寫任何 if-else 去判斷要呼叫哪個工具。你只需要：
+
+寫好工具。寫好 @Tool 的中文描述。把工具餵給 AiServices。
+
+剩下的「選擇」與「調用」工作，Gemini 和 LangChain4j 會幫你搞定
 

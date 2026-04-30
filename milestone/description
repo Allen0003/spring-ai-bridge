@@ -9,3 +9,5 @@ p3. 用 RAG (去查資料 - 法條向量) 在回答
 p4. 使用增強 (Augmentation) - 會到處拿取資料 tool 跟 rag + 生成 (Generation) - 從各處拿取的資料組成訊息回答
 
 p5. 有聊天功能 + memory
+
+p6. ai 自動選擇用哪個tool 然後自動判斷異常 (沒有if else 只有 prompt)
