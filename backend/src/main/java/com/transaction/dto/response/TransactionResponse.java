@@ -6,13 +6,13 @@ import java.time.LocalDateTime;
 public class TransactionResponse {
 
     private String transactionId;
-    private Long userId;
+    private String userId;
     private BigDecimal amount;
     private String currency;
     private String status;
     private LocalDateTime createdAt;
 
-    public TransactionResponse(String transactionId, Long userId, BigDecimal amount,
+    public TransactionResponse(String transactionId, String userId, BigDecimal amount,
                                String currency, String status, LocalDateTime createdAt) {
         this.transactionId = transactionId;
         this.userId = userId;
@@ -27,7 +27,7 @@ public class TransactionResponse {
         return transactionId;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 

@@ -5,6 +5,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.Id;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -19,7 +20,7 @@ public class Transaction {
     private String transactionId;
 
     @Column(name = "user_id", nullable = false)
-    private Long userId;
+    private String userId;
 
     @Column(nullable = false, precision = 19, scale = 4)
     private BigDecimal amount;
@@ -55,11 +56,11 @@ public class Transaction {
         this.transactionId = transactionId;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
