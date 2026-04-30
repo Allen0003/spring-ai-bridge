@@ -13,9 +13,7 @@ import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.service.AiServices;
 import dev.langchain4j.store.embedding.EmbeddingStore;
-import dev.langchain4j.store.embedding.milvus.MilvusEmbeddingStore;
-import io.milvus.param.IndexType;
-import io.milvus.param.MetricType;
+import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,8 +30,8 @@ public class LangChain4jConfig {
                 .apiKey(apiKey)
                 .modelName("gemini-2.5-flash")
                 .temperature(0.0)
-                .topK(1)
-                .maxOutputTokens(500)
+                .temperature(0.0) // 異常分析需要精準，設為 0
+                .maxOutputTokens(1000)
                 .build();
     }
 
@@ -48,7 +46,7 @@ public class LangChain4jConfig {
         return AiServices.builder(FinancialAgent.class)
                 .chatLanguageModel(model)
                 .tools(tools)
-                .contentRetriever(contentRetriever) // <--- 2. 這裡就是把「法規知識庫」丟給 AI 的地方
+//                .contentRetriever(contentRetriever) // <--- 2. 這裡就是把「法規知識庫」丟給 AI 的地方
                 .chatMemoryProvider(chatMemoryProvider)
                 .build();
     }
@@ -65,14 +63,7 @@ public class LangChain4jConfig {
 
     @Bean
     public EmbeddingStore<TextSegment> embeddingStore() {
-        return MilvusEmbeddingStore.builder()
-                .host("localhost")
-                .port(19530)
-                .collectionName("financial_knowledge")
-                .dimension(768)
-                .indexType(IndexType.HNSW) // 推薦 HNSW 索引，效能最佳
-                .metricType(MetricType.COSINE) // 餘弦相似度，適合多數 RAG 場景
-                .build();
+        return new InMemoryEmbeddingStore<>();
     }
 
 
