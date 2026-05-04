@@ -1,7 +1,9 @@
 
 
-demo url: http://localhost:8080/index.html
-demo url: http://localhost:8080/api/ai/initData
+demo url:
+http://localhost:8080/index.html
+demo url:
+http://localhost:8080/api/ai/initData
 
 
 2. 金融知識 RAG 檢索
@@ -13,7 +15,37 @@ Week 1	環境與基礎串接	Spring AI, Ollama/OpenAI	K
 Week 2	Function Calling 實作	AI Agent 調用微服務 API	K
 Week 3	RAG 向量檢索整合	pgvector / Milvus, Embedding	K
 Week 4	AIOps 自動化部署	AWS EKS, KEDA Integration	⏳ 待處理
-玩法二：AI 異常分析 Agent (實戰價值最高)
+
+玩法二：AI 異常分析 Agent (實戰價值最高)  K
+
+1. 玩法三：自動化決策與處置 (Action-Oriented Agent)
+
+目標：讓 AI 根據風險評估，主動要求執行「凍結卡片」或「調整限額」。
+
+實作細節：
+
+在 TransactionTools 增加一個 @Tool("暫時鎖定指定用戶的信用卡") 方法。
+
+在 System Message 告訴喵探員：「如果風險分數超過 8 分，請先詢問人類是否需要喵幫您鎖卡」。
+
+    價值：這展現了 AI 從 感知 (Perception) 到 行動 (Action) 的完整閉環。
+
+2. 玩法四：多模態分析 (Vision for Fraud Detection)
+
+如果用戶收到一張奇怪的簡訊截圖或是 ATM 報錯畫面，喵探員能不能看圖說故事？
+
+目標：上傳圖片給喵探員分析。
+
+    實作細節：
+
+        利用 Gemini 1.5 Flash 的多模態能力（Vision）。
+
+        前端 index.html 增加上傳圖片功能。
+
+        後端傳送 ImageContent 給 Gemini。
+
+    場景：用戶上傳一張「銀行釣魚簡訊」截圖，喵探員看一眼就說：「喵！！這是詐騙網址，千萬別點！」。
+
 
 
 
@@ -148,4 +180,11 @@ AI 會自己決定用哪個 tool 精準度取決於 tool 的描述  不用 if / 
 寫好工具。寫好 @Tool 的中文描述。把工具餵給 AiServices。
 
 剩下的「選擇」與「調用」工作，Gemini 和 LangChain4j 會幫你搞定
+
+
+
+
+在 langchain config 裡面 用@bean
+去實作 agent
+
 
