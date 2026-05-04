@@ -82,6 +82,30 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
         單筆交易金額超過 1000 TWD 且狀態為 SUCCESS 時，系統應自動發送 Push 通知與 Email 憑證給客戶。
         """;
 
+        String rule9 = """
+        【內規第 202 條：異地交易防制】
+        若系統偵測到同一用戶在 1 小時內，出現於地理距離超過 500 公里之不同城市進行消費（如：台北與倫敦、倫敦與紐約），
+        應立即判定為「極高風險交易」，AI 助理必須主動介入詢問是否為本人操作。
+        """;
+
+        String rule10 = """
+        【內規第 77 條：帳戶凍結授權】
+        當風險評估分數高於 8 分，且用戶親口確認非本人交易或無法解釋異常行為時，
+        AI 助理獲授權可引導用戶執行「緊急鎖卡」流程，並呼叫鎖定工具確保資產安全。
+        """;
+
+        String rule11 = """
+        【內規第 55 條：累積交易金額上限】
+        若用戶在單日內累積交易金額超過 50,000 TWD，且其中包含一筆以上境外交易時，
+        系統應將該用戶狀態標記為「待核實」，並在 RAG 分析中提示該行為已觸發大額洗錢防制監控。
+        """;
+
+        String rule12 = """
+        【內規第 15 條：風險等級即時升級】
+        凡交易紀錄中出現狀態為「RISK_REJECTED」且地點位於高風險通報地區（如：特定海外城市）時，
+        系統應忽略其餘 SUCCESS 紀錄之權重，優先建議用戶進入「身分再驗證」或「暫時性鎖卡」流程。
+        """;
+
 
         // 2. 轉換為 Document 物件
         List<Document> documents = List.of(
@@ -92,7 +116,11 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
                 Document.from(rule5),
                 Document.from(rule6),
                 Document.from(rule7),
-                Document.from(rule8)
+                Document.from(rule8),
+                Document.from(rule9),
+                Document.from(rule10),
+                Document.from(rule11),
+                Document.from(rule12)
         );
 
         // 3. 建立匯入器 (Ingestor)
