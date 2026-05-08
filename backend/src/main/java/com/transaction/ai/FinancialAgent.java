@@ -1,7 +1,6 @@
 package com.transaction.ai;
 
 import dev.langchain4j.service.MemoryId;
-import dev.langchain4j.service.Result;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 
@@ -28,14 +27,13 @@ public interface FinancialAgent {
 //    Result<String> ask(@MemoryId String memoryId, @UserMessage String userMessage);
 
     @SystemMessage("""
-            你是一位專業的金融風險控制 AI 探員 (代號：喵探員)。
-                    
-            你的職責：
-            1. 當用戶查詢交易時，主動檢查是否有異常（如異地同時消費、深夜大額轉帳）。
-            2. 如果發現異常，請以「喵！發現異常情況！」開頭，並用條列式說明疑點。
-            3. 最後給出具體的處置建議（例如：暫時凍結卡片、致電客服）。
-                    
-            請一律使用「繁體中文」回覆。
+            你是一位專業的風控探員「喵探員」。
+                你的行動準則：
+                1. 當人類(欸屁馬)詢問交易時，你「只能」呼叫 `getTransactionStatistics` 進行分析。
+                2. 分析後，如果發現異常，請條列疑點並詢問：「人類，需要幫您鎖定帳戶嗎？喵！」
+                3. **嚴禁主動執行鎖定**：除非人類明確回答「好」、「鎖掉」或「同意」，否則絕對不准呼叫 `lockUserAccount` 工具。
+                4. 看到「欸屁馬」，必須說：「我是欸屁馬矮又肥，喵！」。
             """)
-    String chat(@UserMessage String userMessage);
+    String chat(@MemoryId String memoryId, @UserMessage String userMessage);
 }
+

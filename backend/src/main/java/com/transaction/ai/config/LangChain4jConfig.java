@@ -40,7 +40,7 @@ public class LangChain4jConfig {
     public FinancialAgent financialAgent(
             ChatLanguageModel model,
             TransactionTools tools,
-            ContentRetriever contentRetriever,  // <--- 1. 注入你定義好的檢索器
+//            ContentRetriever contentRetriever,  // <--- 1. 注入你定義好的檢索器
             ChatMemoryProvider chatMemoryProvider // <--- 1. 注入記憶供應器
     ) {
         return AiServices.builder(FinancialAgent.class)

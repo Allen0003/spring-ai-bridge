@@ -1,9 +1,11 @@
 package com.transaction.domain.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Builder;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -28,16 +30,9 @@ public class UserEntity {
     @Column(name = "status")
     private Integer status;
 
-    @Column(name = "location")
-    private String location;
-
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
 
     public String getUid() {
         return uid;
@@ -87,19 +82,16 @@ public class UserEntity {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+    public UserEntity(String uid) {
+        this.uid = uid;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
+    public UserEntity(String uid, String username, String email, String phone, Integer status, LocalDateTime createdAt) {
+        this.uid = uid;
+        this.username = username;
+        this.email = email;
+        this.phone = phone;
+        this.status = status;
+        this.createdAt = createdAt;
     }
 }
